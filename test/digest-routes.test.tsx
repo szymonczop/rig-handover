@@ -79,11 +79,15 @@ describe('digest routes', () => {
 
   describe('night with no file (2026-12-31)', () => {
     it('GET /digest/2026-12-31 is 404', async () => {
-      expect((await app.request('/digest/2026-12-31')).status).toBe(404);
+      const res = await app.request('/digest/2026-12-31');
+      expect(res.status).toBe(404);
+      expect(await res.text()).toContain('no run log for 2026-12-31');
     });
 
     it('GET /api/digest/2026-12-31 is 404', async () => {
-      expect((await app.request('/api/digest/2026-12-31')).status).toBe(404);
+      const res = await app.request('/api/digest/2026-12-31');
+      expect(res.status).toBe(404);
+      expect(await res.json()).toEqual({ error: 'no run log', night: '2026-12-31' });
     });
   });
 
