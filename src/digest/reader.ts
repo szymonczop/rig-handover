@@ -11,7 +11,7 @@ function isStatus(value: unknown): value is RunStatus {
 }
 
 /** Parses one log line; null when it does not parse or does not match RunLine. */
-function parseLine(text: string): RunLine | null {
+export function parseLine(text: string): RunLine | null {
   let value: unknown;
   try {
     value = JSON.parse(text);

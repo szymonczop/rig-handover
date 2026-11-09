@@ -1,4 +1,10 @@
+import type { NightCounts } from '../digest/counts.js';
 import type { Status } from '../status.js';
+
+function countsText(c: NightCounts | null | undefined): string {
+  if (!c) return ' · —';
+  return ` · ok ${c.ok} · retry ${c.retry} · fail ${c.fail}` + (c.bad > 0 ? ` · bad ${c.bad}` : '');
+}
 
 export function StatusBoard({ status }: { status: Status }) {
   return (
@@ -20,7 +26,10 @@ export function StatusBoard({ status }: { status: Status }) {
       ) : (
         <ul>
           {status.nights.map((n) => (
-            <li>{n}</li>
+            <li>
+              <a href={`/digest/${n}`}>{n}</a>
+              {countsText(status.counts[n])}
+            </li>
           ))}
         </ul>
       )}
